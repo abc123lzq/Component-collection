@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="telephone=no,email=no" name="format-detection">
+    <script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+    <title>新科技</title>
+    <style>
+        .d1 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 1rem;
+            height: 1rem;
+            background-color: red;
+        }
+
+        .d2 {
+            position: absolute;
+            top: 1.2rem;
+            left: 0;
+            width: 1rem;
+            height: 1rem;
+            background-color: chartreuse;
+        }
+
+        .d3 {
+            position: absolute;
+            top: 2.5rem;
+            left: 0;
+            width: 1rem;
+            height: 1rem;
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<div class="d1"></div>
+<div class="d2"></div>
+<div class="d3"></div>
+<body>
+<script>
+    /**
+     * 要写入都是基于基本功能的拓展说明
+     * title:自定义事件拖拽组件
+     * options:配置参数：event 看要配置的移入就触发还是默认的点击才触发  在来一如延迟 delay
+     * methods:方法：getColor
+     * Events:事件：toDown toUp
+     */
+    window.onload = function () {
+        var d1 = new Drang();
+        d1.init({   //配置参数 opt
+            id: 'd1',
+            event: 'mouseover',
+            delay: 500
+        });
+        var d2 = new Drang();
+        d2.init({
+            id: 'd2'
+        });
+        //改成自定义事件写法
+        bindEvent(d2, 'toDown', function () {
+            document.title = 'hello'
+        });
+        var d3 = new Drang();
+        d3.init({   //配置参数 opt
+            id: 'd3'
+        });
+        bindEvent(d3, 'toDown', function () {
+            document.title = 'word'
+        });
+        bindEvent(d3, 'toUp', function () {
+            document.title = '再见'
+        });
+    };
+
+    function Drang() {
+        this.obj = null;
+        this.disX = 0;
+        this.dixY = 0;
+        this.settings = {
+            //第一步配置参数
+            event: 'mousedown',
+            delay: ''
+        }
+    }
+    Drang.prototype.init = function (opt) {
+        extend(this.settings, opt);//配置赋给默认
+        this.obj = document.getElementsByClassName(opt.id)[0];
+        var that = this;
+        var time = null;
+        //1.1配置参数的自定事件addEventListener
+        this.obj.addEventListener(this.settings.event, function (ev) {
+            that.getColor(that.obj);
+            if (that.settings.event === 'mouseover' && that.settings.delay) {
+                time = setTimeout(function () {
+                    that.show(ev, that);
+                }, that.settings.delay)
+            } else {
+                that.show(ev, that)
+            }
+        });
+        //养成好习惯定时器用完要清理
+        this.obj.onmouseout = function () {
+            clearTimeout(time);
+        }
+    };
+    Drang.prototype.show = function (ev, that) {
+        var ev = ev || window.event;
+        that.fuDown(ev);
+        fireEvent(that, 'toDown');
+        document.onmousemove = function (ev) {
+            that.fnMove(ev);
+        };
+        document.onmouseup = function () {
+            fireEvent(that, 'toUp');
+            that.fnUp();
+            return false
+        };
+    };
+    Drang.prototype.getColor = function (obj) {
+        function getStyle(dom, attr) {
+            if (dom.currentStyle) {
+                return dom.currentStyle[attr];
+            } else {
+                return getComputedStyle(dom)[attr];
+            }
+        }
+
+        console.log(getStyle(obj, 'background-color'));
+    };
+    Drang.prototype.fuDown = function (ev) {
+        this.disX = ev.clientX - this.obj.offsetLeft;
+        this.disY = ev.clientY - this.obj.offsetTop;
+    };
+    Drang.prototype.fnMove = function (ev) {
+        this.obj.style.left = ev.clientX - this.disX + 'px';
+        this.obj.style.top = ev.clientY - this.disY + 'px';
+    };
+    Drang.prototype.fnUp = function () {
+        document.onmousemove = null;
+        document.onmouseup = null;
+    };
+
+    //通用部分
+    function extend(obj1, obj2) {
+        for (var attr in obj2) {
+            obj1[attr] = obj2[attr];
+        }
+    }
+
+    function bindEvent(obj, events, fn) {
+        //obj:楼层
+        //events：书架
+        //fn:一本书
+
+        obj.listeners = obj.listeners || {};
+        obj.listeners[events] = obj.listeners[events] || [];
+        obj.listeners[events].push(fn);
+        //因为obj不是dom元素在这个实例上是对象
+        if (obj.nodeType) { //加个判断是不dom元素来走自己的路
+            if (obj.addEventListener()) {
+                obj.addEventListener(events, fn, false)
+            } else {
+                obj.attachEvent('on' + events, fn);
+            }
+        }
+    }
+
+    function fireEvent(obj, events) { //主动触发自定义事件
+        if (obj.listeners && obj.listeners[events]) { //先后顺序还是要先加个判断让他存在了才走这里
+            for (var i = 0; i < obj.listeners[events].length; i++) {
+                obj.listeners[events][i]();
+            }
+        }
+    }
+</script>
+</body>
+</html>
