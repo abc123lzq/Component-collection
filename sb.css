@@ -17,3 +17,7 @@ body {
     background-color: #fff;
     color: red;
 }
+
+html{
+    font-size: 62.5%;
+}
