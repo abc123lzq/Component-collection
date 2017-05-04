@@ -1,6 +1,9 @@
-body{
+body {
     background-color: #fff;
     color: red;
 }
 
-/* 很不错啊 */
+html{
+    font-size: 62.5%;
+}
+
