@@ -147,9 +147,16 @@
         var _fadeWord = fadeWord;
 
         function fadeWord() {
+            this.settings = {
+                sayOver: function () {
+                }
+            }
+
         }
 
         fadeWord.prototype.init = function (opt) {
+            extend(this.settings, opt);
+
             this.ospan1 = document.getElementById(opt.span1);
             this.op1 = document.getElementById(opt.porxbox1);
             this.op2 = document.getElementById(opt.p2);
@@ -177,7 +184,7 @@
                     return false;
                 } else {
 
-                    that.fn(that.op2, that.op1, that.ospan1, that.ospan2);
+                    that.fn(that.op2, that.op1, that.ospan2, that.ospan1,);
                 }
             };
         };
@@ -204,14 +211,22 @@
                     num++;
                     num = num % that.oli.length;
                     that.oli[num].style.backgroundColor = 'red';
-                    sb.i = x2.innerHTML;
+                    sb.i = x1.innerHTML;
                     if (sb.i === '0/' + len) {
-                        clearInterval(that.timer.i)
+                        clearInterval(that.timer.i);
+                        //实例二组件拓展
+                        that.settings.sayOver();
                     }
                 }
             }, 30)
 
         };
+
+        function extend(obj1, obj2) {
+            for (var attr in  obj2) {
+                obj1[attr] = obj2[attr]
+            }
+        }
 
         win.fadeWord = fadeWord;
 
@@ -242,6 +257,9 @@
         ul: 'ulx2',
         toLeft: 'toLeft2',
         toRight: 'toRight2',
+        sayOver: function () {
+            alert('搬运完成总共999999元')
+        }
     });
 </script>
 </body>
