@@ -145,18 +145,25 @@
     (function (win) {
 
         var _fadeWord = fadeWord;
+        var _bindEvent = bindEvent;
 
-        function fadeWord() { 
+
+        function fadeWord() {
             this.settings = {
                 sayOver: function () {
+                },
+                fire: function () {
+
                 }
             }
 
         }
-        
-        
+
+
         fadeWord.prototype.init = function (opt) {
             extend(this.settings, opt);
+            //链接图书馆
+            this.settings.fire();
 
             this.ospan1 = document.getElementById(opt.span1);
             this.op1 = document.getElementById(opt.porxbox1);
@@ -214,7 +221,13 @@
                     that.oli[num].style.backgroundColor = 'red';
                     sb.i = x1.innerHTML;
                     if (sb.i === '0/' + len) {
+                        //清除各自的开关
                         clearInterval(that.timer.i);
+
+                        //触发定义事件
+                        fireEvent(that, 'res');
+                        fireEvent(that, 'toDie');
+
                         //实例二组件拓展
                         that.settings.sayOver();
                     }
@@ -223,15 +236,54 @@
 
         };
 
+        //深拷贝
         function extend(obj1, obj2) {
             for (var attr in  obj2) {
                 obj1[attr] = obj2[attr]
             }
         }
 
+        //创建图书馆
+        function bindEvent(obj, events, fn) {
+            obj.listeners = obj.listeners || {};
+            obj.listeners[events] = obj.listeners[events] || [];
+            obj.listeners[events].push(fn);
+            if (obj.nodeType) {
+                if (obj.addEventListener()) {
+                    obj.addEventListener(events, fn, false)
+                } else {
+                    obj.attachEvent('on' + events, fn);
+                }
+            }
+        }
+
+        //查找书籍
+        function fireEvent(obj, events) {
+            if (obj.listeners && obj.listeners[events]) {
+                for (var i = 0; i < obj.listeners[events].length; i++) {
+                    obj.listeners[events][i]();
+                }
+            }
+        }
+
         win.fadeWord = fadeWord;
+        win.bindEvent = bindEvent;
+        win.fireEvent = fireEvent;
 
     })(window);
+
+    //自定义事件
+    function fires() {
+
+        bindEvent(sb2, 'res', function () {
+            alert('没力气了要休一下在 干')
+        });
+
+        bindEvent(sb2, 'toDie', function () {
+            alert('去死，赶紧干活')
+        });
+    }
+
 
     //实例1
     var sb1 = new fadeWord();
@@ -260,8 +312,11 @@
         toRight: 'toRight2',
         sayOver: function () {
             alert('搬运完成总共999999元')
-        }
+        },
+        fire: fires
     });
+
+
 </script>
 </body>
 </html>
