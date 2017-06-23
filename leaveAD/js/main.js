@@ -113,8 +113,7 @@
 (function () {
     var _IframeBOX = Iframeopt();
 
-    function Iframeopt() {
-    }
+    function Iframeopt() {}
 
     Iframeopt.prototype.init = function (dom, iframeId, src) {
         this.dom = document.getElementById(dom);
