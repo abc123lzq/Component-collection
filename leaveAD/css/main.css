@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.shade-forIntercept {
+    background: #000;
+    opacity: 0.6;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+}
+
+@media screen and (min-width: 640px) {
+    .intercept-box {
+        width: 484px !important;
+    }
+}
+
+.intercept-box {
+    display: none;
+    width: 90%;
+    position: absolute;
+    background-color: #fff;
+    z-index: 999;
+    border-radius: 10px;
+    clear: both;
+}
+
+.intercept-box .tips-text1 {
+    width: 100%;
+    text-align: center;
+    font-size: 17px;
+    position: relative;
+    padding: 5% 0 3% 0;
+    color: #333;
+}
+
+.intercept-box .tips-text1 .close-box {
+    position: absolute;
+    right: 1%;
+    top: 10px;
+    color: #666;
+}
+
+.intercept-box .tips-text1 .close-box img {
+    width: 40%;
+    clear: both;
+}
+
+.intercept-box .tips-img {
+    width: 100%;
+    padding: 2% 0;
+    clear: both;
+}
+
+.intercept-box .tips-img ul {
+    width: 86%;
+    margin-left: 5%;
+}
+
+.intercept-box .tips-img ul li {
+    width: 22%;
+    text-align: center;
+    font-size: 13px;
+    color: #000;
+    float: left;
+    margin-left: 3%;
+}
+
+.intercept-box .tips-img ul li img {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.intercept-box .tips-api {
+    width: 100%;
+    padding: 2% 0;
+    clear: both;
+}
+
+.intercept-box .tips-api ul {
+}
+
+.intercept-box .tips-api ul li:first-child {
+    margin-left: 19%;
+}
+
+.intercept-box .tips-api ul li {
+    width: 27%;
+    background-color: #28abe3;
+    margin: 0 5%;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    border-radius: 5px;
+    float: left;
+}
+
+.intercept-box .tips-api ul li a {
+    color: #ffffff;
+}
+
+.intercept-box .tips-text2 {
+    width: 100%;
+    text-align: center;
+    color: #ff0000;
+    padding: 2% 0;
+    font-size: 14px;
+    clear: both;
+}
+
+.intercept-box .tips-check {
+    width: 100%;
+    text-align: center;
+    color: #8d8d8d;
+    padding: 2% 0 3% 0;
+    font-size: 14px;
+}
+
+.intercept-box .tips-check #checkloster {
+    vertical-align: middle;
+}
+
+#nm {
+    width: 97vw;
+    height: 100vh;
+    /*插到指定节点需设置相对定位*/
+    margin: 0 auto;
+    position: relative;
+}
