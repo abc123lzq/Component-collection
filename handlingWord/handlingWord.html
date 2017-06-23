@@ -268,55 +268,55 @@
 
         win.fadeWord = fadeWord;
         win.bindEvent = bindEvent;
-        win.fireEvent = fireEvent;
 
     })(window);
 
-    //自定义事件
-    function fires() {
+    +function () {
+        //自定义事件
+        function fires() {
 
-        bindEvent(sb2, 'res', function () {
-            alert('没力气了要休一下在 干')
+            bindEvent(sb2, 'res', function () {
+                alert('没力气了要休一下在 干')
+            });
+
+            bindEvent(sb2, 'toDie', function () {
+                alert('去死，赶紧干活')
+            });
+        }
+
+
+        //实例1
+        var sb1 = new fadeWord();
+
+        sb1.init({
+            porxbox1: 'px1',
+            p2: 'p2',
+            span1: 'span1',
+            span2: 'span2',
+            ul: 'ulx1',
+            toLeft: 'toLeft1',
+            toRight: 'toRight1',
         });
 
-        bindEvent(sb2, 'toDie', function () {
-            alert('去死，赶紧干活')
+
+        //实例2
+        var sb2 = new fadeWord();
+
+        sb2.init({
+            porxbox1: 'p3',
+            p2: 'p4',
+            span1: 'span3',
+            span2: 'span4',
+            ul: 'ulx2',
+            toLeft: 'toLeft2',
+            toRight: 'toRight2',
+            sayOver: function () {
+                alert('搬运完成总共999999元')
+            },
+            fire: fires
         });
-    }
 
-
-    //实例1
-    var sb1 = new fadeWord();
-
-    sb1.init({
-        porxbox1: 'px1',
-        p2: 'p2',
-        span1: 'span1',
-        span2: 'span2',
-        ul: 'ulx1',
-        toLeft: 'toLeft1',
-        toRight: 'toRight1',
-    });
-
-
-    //实例2
-    var sb2 = new fadeWord();
-
-    sb2.init({
-        porxbox1: 'p3',
-        p2: 'p4',
-        span1: 'span3',
-        span2: 'span4',
-        ul: 'ulx2',
-        toLeft: 'toLeft2',
-        toRight: 'toRight2',
-        sayOver: function () {
-            alert('搬运完成总共999999元')
-        },
-        fire: fires
-    });
-
-
+    }();
 </script>
 </body>
 </html>
