@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        ul {
+            margin: 0;
+            padding: 0;
+            position: relative;
+            height: 173px;
+            overflow: hidden;
+        }
+
+        li {
+            list-style: none;
+            width: 120px;
+            height: 170px;
+            position: relative;
+            float: left;
+        }
+
+        div {
+            height: 340px;
+            position: absolute;
+            top: 0;
+        }
+
+        img {
+            width: 120px;
+            height: 170px;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li>
+        <div><img src="img/0.jpg" alt=""><img src="img/0.jpg" alt=""></div>
+    </li>
+    <li>
+        <div><img src="img/0.jpg" alt=""><img src="img/0.jpg" alt=""></div>
+    </li>
+    <li>
+        <!--这两个闪点不用div包裹了方便后期的选择-->
+        <img src="img/colon.jpg" alt="">
+    </li>
+    <li>
+        <div><img src="img/0.jpg" alt=""><img src="img/0.jpg" alt=""></div>
+    </li>
+    <li>
+        <div><img src="img/0.jpg" alt=""><img src="img/0.jpg" alt=""></div>
+    </li>
+    <li>
+        <!--这两个闪点不用div包裹了方便后期的选择-->
+        <img src="img/colon.jpg" alt="">
+    </li>
+    <li>
+        <div><img src="img/0.jpg" alt=""><img src="img/0.jpg" alt=""></div>
+    </li>
+    <li>
+        <div><img src="img/0.jpg" alt=""><img src="img/0.jpg" alt=""></div>
+    </li>
+</ul>
+<script type="text/javascript">
+
+    (function (win) {
+
+        var _digitalClock = digitalClock;
+
+        var digitalClock = function () {
+            this.oDiv = document.querySelectorAll('li>div');
+            this.oImg = document.querySelectorAll('li>img');
+            this.oldTime = '';
+        };
+
+
+        digitalClock.prototype.init = function () {
+            this.getTime();
+            var that = this;
+
+            setInterval(function () {
+
+                for (var i = 0; i < that.oImg.length; i++) {
+                    that.oImg[i].src = 'img/colon1.jpg';
+                }
+
+                setTimeout(function () {
+                    for (var i = 0; i < that.oImg.length; i++) {
+                        that.oImg[i].src = 'img/colon.jpg';
+                    }
+                }, 500);
+                that.getTime();
+            }, 1000);
+        };
+
+        digitalClock.prototype.getTime = function () {
+            var date = new Date(),
+                h = date.getHours(),
+                m = date.getMinutes(),
+                s = date.getSeconds();
+            this.time = toZero(h) + toZero(m) + toZero(s);
+            this.autoPlay(this.time);
+        };
+
+        digitalClock.prototype.autoPlay = function (time) {
+            for (var i = 0; i < time.length; i++) {
+                if (this.oldTime[i] !== time[i]) {
+                    this.sliden(i, time);
+                }
+            }
+
+            this.oldTime = time;
+        };
+
+        digitalClock.prototype.sliden = function (i, time) {
+            var that = this;
+            this.aImg = this.oDiv[i].getElementsByTagName('img');
+            this.aImg[0].src = 'img/' + time[i] + '.jpg';
+            this.aImg[1].src = 'img/' + time[i] + '.jpg';
+
+            this.move(this.oDiv[i], 'top', -170, 400, function () {
+                that.oDiv[i].style.top = '';
+            })
+        };
+
+        digitalClock.prototype.move = function (obj, attr, target, duration, callback) {
+            var b = parseFloat(getComputedStyle(obj)[attr]);
+            var c = target - b;
+            var d = duration;
+            var now = new Date().getTime();
+            obj[attr] = setInterval(function () {
+                var t = new Date().getTime() - now;
+                var value = b + c / d * t;
+                obj.style[attr] = value + "px";
+                if (t >= d) {
+                    clearInterval(obj[attr]);
+                    obj.style[attr] = target + "px";
+                    callback && callback();//当到达目标值的时候执行回调函数
+                }
+            }, 30)
+
+        };
+
+
+        function toZero(x) {
+            return x < 10 ? "0" + x : '' + x;
+        }
+
+        win.digitalClock = new digitalClock().init();
+
+    })(window);
+
+
+</script>
+</body>
+</html>
+
+
+
+
