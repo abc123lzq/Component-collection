@@ -128,7 +128,7 @@
         iframe.src = src;
 
         //设置iframe的样式
-        iframe.style.width = '100%';
+        iframe.style.width = '100vw';
         iframe.style.height = '100%';
         iframe.style.border = 'none';
         iframe.style.top = '0';
