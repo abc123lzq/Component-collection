@@ -7,8 +7,7 @@
     var _InterceptBox = InterceptBox;
 
     //返回拦截原型
-    function InterceptBox() {
-    }
+    function InterceptBox() {}
 
     InterceptBox.prototype.init = function (opt) {
         this.a1 = document.getElementById(opt.oDiv1);
@@ -115,7 +114,7 @@
 
     function Iframeopt() {}
 
-    Iframeopt.prototype.init = function (dom, iframeId, src) {
+    Iframeopt.prototype.init = function (dom, iframeId, src,vw,vh) {
         this.dom = document.getElementById(dom);
         var iframe = document.createElement("iframe");
 
@@ -128,8 +127,8 @@
         iframe.src = src;
 
         //设置iframe的样式
-        iframe.style.width = '100vw';
-        iframe.style.height = '100%';
+        iframe.style.width = vw;
+        iframe.style.height = vh';
         iframe.style.border = 'none';
         iframe.style.top = '0';
         iframe.style.left = '0';
@@ -150,5 +149,5 @@
 
 ~function () {
     var IframeBOX = new Iframeopt();
-    IframeBOX.init('nm', 'abc', 'https://mdianying.baidu.com/');
+    IframeBOX.init('nm', 'abc', 'https://mdianying.baidu.com/','100vw','100vh');
 }();
