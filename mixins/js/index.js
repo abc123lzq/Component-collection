@@ -1,10 +1,8 @@
 /**
  * Created by lzq on 2017/7/13.
+ * 事件元素拖动
  */
-/***
- * lzq 事件元素拖动
- * 此插件需要ul不写宽度并使用混合的Flexbox，这样可以谁便后期运营内容的增加而自动选择宽度
- */
+
 (function (window, undefined) {
     var Drangd_ = Drang;
 
@@ -78,11 +76,10 @@
 })(Drang);
 
 
+
 /***
  * lzq 限制条数显示更多
  */
-
-
 +function () {
     var astrict_ = astrict;
 
@@ -186,8 +183,9 @@
 })(astrict);
 
 
+
 /**
- * 不同页面的拓展需要自己的js里调用
+ * tab选项卡
  */
 (function () {
     var Tab_ = Tab();
