@@ -76,7 +76,6 @@
 })(Drang);
 
 
-
 /***
  * lzq 限制条数显示更多
  */
@@ -97,6 +96,7 @@
         that.sbb = null;
         that.aul = [];
         that.ali = [];
+        that.count = opt.count - 1;
 
         that.hideInit();
         that.creatMore();
@@ -137,7 +137,7 @@
             that.oli = that.aul[i].getElementsByTagName('li');
             that.ali.push(that.aul[i].getElementsByTagName('li'));
             for (var j = 0; j < that.oli.length; j++) {
-                if (j > 2) { //参数
+                if (j > that.count) { //参数
                     that.oli[j].style.display = 'none';
                 }
             }
@@ -149,13 +149,13 @@
         var that = this;
         that.createGM[i].onclick = function () {
             for (var j = 0; j < ali[i].length; j++) {
-                if (j > 2 && this.getAttribute('on') === 'true') { //参数
+                if (j > that.count && this.getAttribute('on') === 'true') { //参数
                     ali[i][j].style.display = '';
                     if (j >= (ali[i].length) - 1) {
                         this.setAttribute('on', 'false');
                         this.innerHTML = '收起内容';
                     }
-                } else if (j > 2 && this.getAttribute('on') === 'false') {
+                } else if (j > that.count && this.getAttribute('on') === 'false') {
                     ali[i][j].style.display = 'none';
                     if (j >= (ali[i].length) - 1) {
                         this.innerHTML = '加载更多';
@@ -177,11 +177,10 @@
     var astrict1 = new astrict();
     astrict1.init({
         oDiv: 'game-match-tab-con',//ul父级div{className}
-        count: '2'//限制超出多少个隐藏
+        count: '3'//限制超出多少个隐藏
 
     });
 })(astrict);
-
 
 
 /**
